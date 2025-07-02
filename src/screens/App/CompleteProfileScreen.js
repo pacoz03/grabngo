@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
-// import { supabase } from '../../api/supabase';
+import { supabase } from '../../api/supabase';
  import { useAuth } from '../../context/AuthContext';
 import AuthInput from '../../components/auth/AuthInput';
 import AuthButton from '../../components/auth/AuthButton';
@@ -24,21 +24,23 @@ export default function CompleteProfileScreen() {
             return;
         }
         setLoading(true);
-        const { error } = await supabase
-            .from('profiles')
-            .update({ full_name: fullName })
-            .eq('id', user.id);
+        try {
+            const { error } = await supabase
+                .from('profiles')
+                .update({ full_name: fullName })
+                .eq('id', user.id);
 
-        if (error) {
-            Alert.alert("Errore", error.message);
-            setLoading(false);
-        } else {
+            if (error) throw error;
+
             // L'aggiornamento ha successo, ricarica il profilo.
             // L'onAuthStateChange nel context rileverà il cambiamento e
             // il navigatore si aggiornerà automaticamente.
             await refreshProfile();
             // Non c'è bisogno di setLoading(false) qui perché il componente
             // verrà smontato dalla navigazione.
+        } catch (error) {
+            Alert.alert("Errore", error.message);
+            setLoading(false);
         }
     }
 
@@ -53,4 +55,3 @@ export default function CompleteProfileScreen() {
         </SafeAreaView>
     );
 }
-
