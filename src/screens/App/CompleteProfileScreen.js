@@ -31,13 +31,7 @@ export default function CompleteProfileScreen() {
                 .eq('id', user.id);
 
             if (error) throw error;
-
-            // L'aggiornamento ha successo, ricarica il profilo.
-            // L'onAuthStateChange nel context rileverà il cambiamento e
-            // il navigatore si aggiornerà automaticamente.
             await refreshProfile();
-            // Non c'è bisogno di setLoading(false) qui perché il componente
-            // verrà smontato dalla navigazione.
         } catch (error) {
             Alert.alert("Errore", error.message);
             setLoading(false);
