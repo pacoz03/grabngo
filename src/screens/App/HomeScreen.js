@@ -13,7 +13,7 @@ import HomeOfferCard from '../../components/app/HomeOfferCard'; // <-- NUOVO IMP
 const homeStyles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#F4F5F7' },
   container: { flex: 1 },
-  header: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, alignItems: 'center' },
+  header: { paddingHorizontal: 20, paddingTop: 40, paddingBottom: 10, alignItems: 'center' },
   headerTitle: { fontSize: 24, fontFamily: 'SpaceGrotesk-Bold', textAlign: 'center', color: '#000' },
   mapContainer: { marginHorizontal: 20, marginTop: 20, borderRadius: 15, overflow: 'hidden', height: 250, justifyContent: 'center', alignItems: 'center' },
   map: { ...StyleSheet.absoluteFillObject },

@@ -20,12 +20,6 @@ const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',
         backgroundColor: COLORS.white,
-        borderRadius: 12,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        elevation: 4,
         padding: 15,
         alignItems: 'center',
     },
@@ -52,7 +46,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
     },
     image: {
-        width: 80,
+        width: 120,
         height: 80,
         borderRadius: 10,
     },

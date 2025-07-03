@@ -69,7 +69,24 @@ export default function CartScreen({ navigation }) {
     );
 }
 const styles = StyleSheet.create({
-    safeArea: { flex: 1, backgroundColor: COLORS.white }, headerNav: { padding: 20, alignItems: 'center' }, headerTitle: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 22, color: COLORS.title }, distributorCard: { backgroundColor: COLORS.lightGray, borderRadius: 12, padding: 15, marginBottom: 20 }, distributorTitle: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 14, color: COLORS.text }, distributorName: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.title, marginVertical: 4 }, distributorDescription: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 14, color: COLORS.text }, sectionTitle: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 20, color: COLORS.title, marginTop: 10, marginBottom: 15 }, summaryContainer: { marginTop: 20, borderTopWidth: 1, borderColor: COLORS.lightGray, paddingTop: 10 }, summaryRow: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 8 }, summaryLabel: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 16, color: COLORS.text }, summaryValue: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 16, color: COLORS.text }, divider: { height: 1, backgroundColor: COLORS.lightGray, marginVertical: 15 }, totalLabel: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.title }, totalValue: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.title }, footer: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: 20, backgroundColor: COLORS.white, borderTopWidth: 1, borderColor: COLORS.lightGray }, actionButton: { backgroundColor: COLORS.primary, padding: 15, borderRadius: 12, alignItems: 'center' }, actionButtonText: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, color: COLORS.white },
+    safeArea: { flex: 1, backgroundColor: COLORS.white }, 
+    headerNav: { padding: 20, alignItems: 'center',justifyContent: 'space-between',paddingTop: 40 }, 
+    headerTitle: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 22, color: COLORS.title }, 
+    distributorCard: { backgroundColor: COLORS.lightGray, borderRadius: 12, padding: 15, marginBottom: 20 }, 
+    distributorTitle: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 14, color: COLORS.text }, 
+    distributorName: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.title, marginVertical: 4 }, 
+    distributorDescription: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 14, color: COLORS.text }, 
+    sectionTitle: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 20, color: COLORS.title, marginTop: 10, marginBottom: 15 }, 
+    summaryContainer: { marginTop: 20, borderTopWidth: 1, borderColor: COLORS.lightGray, paddingTop: 10 }, 
+    summaryRow: { flexDirection: 'row', justifyContent: 'space-between', marginVertical: 8 }, 
+    summaryLabel: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 16, color: COLORS.text }, 
+    summaryValue: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 16, color: COLORS.text }, 
+    divider: { height: 1, backgroundColor: COLORS.lightGray, marginVertical: 15 }, 
+    totalLabel: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.title }, 
+    totalValue: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.title }, 
+    footer: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: 20, backgroundColor: COLORS.white, borderTopWidth: 1, borderColor: COLORS.lightGray }, 
+    actionButton: { backgroundColor: COLORS.primary, padding: 15, borderRadius: 12, alignItems: 'center' }, 
+    actionButtonText: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, color: COLORS.white },
     emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' }, emptyText: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.text }
 });
 

@@ -19,19 +19,11 @@ const styles = StyleSheet.create({
     card: {
         width: 160,
         marginRight: 15,
-        backgroundColor: COLORS.white,
-        borderRadius: 12,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.08,
-        shadowRadius: 3,
-        elevation: 2,
     },
     image: {
-        width: '100%',
-        height: 100,
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
+        width: 160,
+        height: 160,
+        borderRadius: 12,
     },
     textContainer: {
         padding: 12,
@@ -44,7 +36,7 @@ const styles = StyleSheet.create({
     },
     code: {
         fontFamily: 'SpaceGrotesk-Regular',
-        fontSize: 12,
+        fontSize: 11,
         color: COLORS.text,
     },
 });

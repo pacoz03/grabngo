@@ -69,7 +69,7 @@ export default function ProfileScreen({ navigation }) {
 }
 const styles = StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: PROFILE_COLORS.background }, container: { flex: 1 },
-    header: { justifyContent: 'center', alignItems: 'center', padding: 20 },
+    header: { justifyContent: 'center', alignItems: 'center', padding: 20, paddingTop:40 },
     headerTitle: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', color: PROFILE_COLORS.title },
     profileInfoContainer: { alignItems: 'center', marginVertical: 10, marginBottom: 30 },
     avatar: { width: 100, height: 100, borderRadius: 50 },
