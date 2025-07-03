@@ -8,6 +8,7 @@ const PROFILE_COLORS = { background: '#F4F5F7', white: '#FFFFFF', text: '#555', 
 
 export default function ProfileScreen({ navigation }) {
      const { session, profile, signOut } = useAuth();
+      console.log("ProfileScreen - Session:", profile);
 
     const sections = {
         personal: [
@@ -31,7 +32,7 @@ export default function ProfileScreen({ navigation }) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.header}><Text style={styles.headerTitle}>Account</Text></View>
                 <View style={styles.profileInfoContainer}>
-                    <Image source={{ uri: profile.avatar_url || 'https://placehold.co/100x100/ccc/333?text=U' }} style={styles.avatar} />
+                    <Image source={{ uri: profile.avatar_url }} style={styles.avatar} />
                     <Text style={styles.name}>{profile.full_name || 'Utente'}</Text>
                 </View>
 
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     header: { justifyContent: 'center', alignItems: 'center', padding: 20, paddingTop:40 },
     headerTitle: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', color: PROFILE_COLORS.title },
     profileInfoContainer: { alignItems: 'center', marginVertical: 10, marginBottom: 30 },
-    avatar: { width: 100, height: 100, borderRadius: 50 },
+    avatar: { width: 150, height: 150, borderRadius: 100 },
     name: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', marginTop: 15, color: PROFILE_COLORS.title },
     section: { paddingHorizontal: 20, marginBottom: 20 },
     sectionTitle: { fontSize: 18, fontFamily: 'SpaceGrotesk-Bold', color: PROFILE_COLORS.title, marginBottom: 10 },

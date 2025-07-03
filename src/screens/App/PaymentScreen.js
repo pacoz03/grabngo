@@ -20,6 +20,7 @@ const paymentStyles = StyleSheet.create({
     actionButtonText: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, color: '#FFFFFF' },
 });
 
+// Componente per una singola riga di metodo di pagamento
 const PaymentMethodItem = ({ method, selected, onSelect }) => (
     <TouchableOpacity style={[paymentStyles.methodItem, selected && paymentStyles.selectedMethod]} onPress={onSelect}>
         <Ionicons name={method.icon} size={24} color={selected ? '#007BFF' : '#555'} />
@@ -48,30 +49,29 @@ export default function PaymentScreen({ route, navigation }) {
         }
         setLoading(true);
         try {
-            const { data: orderData, error: orderError } = await supabase
-                .from('orders')
-                .insert({
-                    user_id: session.user.id,
-                    distributor_id: distributor.id,
-                    total_price: finalTotal,
-                })
-                .select()
-                .single();
-            if (orderError) throw orderError;
-
-            const orderItemsData = cartItems.map(item => ({
-                order_id: orderData.id,
+            // Prepara i dati per la funzione RPC.
+            const itemsForRPC = cartItems.map(item => ({
                 product_id: item.product.id,
                 quantity: item.quantity,
-                price_at_purchase: item.product.price,
             }));
-            const { error: itemsError } = await supabase.from('order_items').insert(orderItemsData);
-            if (itemsError) throw itemsError;
 
+            // Chiama la nuova funzione unificata 'place_order'
+            const { data: newOrderId, error } = await supabase.rpc('place_order', {
+                distributor_id_param: distributor.id,
+                cart_items: itemsForRPC
+            });
+
+            if (error) {
+                // Se la funzione RPC restituisce un errore (es. stock insufficiente), mostralo all'utente.
+                throw new Error(error.message || "Impossibile creare l'ordine.");
+            }
+
+            // Se tutto va a buon fine, svuota il carrello e naviga.
             clearCart();
-            navigation.navigate('OrderConfirmation', { orderId: orderData.id });
+            navigation.navigate('OrderConfirmation', { orderId: newOrderId });
+
         } catch (error) {
-            Alert.alert("Errore", "Impossibile completare il pagamento.");
+            Alert.alert("Pagamento Fallito", error.message);
         } finally {
             setLoading(false);
         }

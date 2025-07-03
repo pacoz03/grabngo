@@ -28,6 +28,7 @@ export default function PastOrderDetailScreen({ route, navigation }) {
                         price: item.price_at_purchase,
                     }));
                     setOrderItems(items);
+                    console.log("Order Items:", items);
                 }
             } catch (error) {
                  Alert.alert("Errore", "Impossibile caricare i dettagli dell'ordine.");
@@ -51,7 +52,7 @@ export default function PastOrderDetailScreen({ route, navigation }) {
             {loading ? <ActivityIndicator style={{flex: 1}}/> : (
                 <FlatList
                     data={orderItems}
-                    renderItem={({ item }) => <CartItem item={item} />}
+                    renderItem={({ item }) => <CartItem item={item} quantity={item.quantity} isEditable={false} />}
                     keyExtractor={item => item.id}
                     ListHeaderComponent={<Text style={styles.sectionTitle}>Prodotti</Text>}
                     ListFooterComponent={

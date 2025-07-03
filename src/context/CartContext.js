@@ -10,15 +10,22 @@ export const CartProvider = ({ children }) => {
 
     const addItemsToCart = (items, distributorInfo) => {
         const itemsToAdd = items.filter(item => item.quantity > 0);
-        if (distributor?.id !== distributorInfo.id || cartItems.length === 0) {
+
+        // Se il carrello è vuoto o il distributore è diverso, sostituisci il carrello.
+        if (!distributor || distributor.id !== distributorInfo.id) {
             setCartItems(itemsToAdd);
             setDistributor(distributorInfo);
         } else {
+            // Altrimenti, unisci gli articoli.
             const newCartItems = [...cartItems];
             itemsToAdd.forEach(itemToAdd => {
                 const existingItemIndex = newCartItems.findIndex(item => item.product.id === itemToAdd.product.id);
+
                 if (existingItemIndex > -1) {
-                    newCartItems[existingItemIndex] = itemToAdd;
+                    const existingItem = newCartItems[existingItemIndex];
+                    const newQuantity = existingItem.quantity + itemToAdd.quantity;
+                    // Assicurati di non superare lo stock disponibile
+                    existingItem.quantity = Math.min(newQuantity, itemToAdd.product.stock);
                 } else {
                     newCartItems.push(itemToAdd);
                 }

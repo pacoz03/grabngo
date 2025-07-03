@@ -87,5 +87,11 @@ export default function SelectQuantityScreen({ route, navigation }) {
     );
 }
 const quantityStyles = StyleSheet.create({
-    safeArea: { flex: 1, backgroundColor: COLORS.background }, headerNav: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, backgroundColor: COLORS.background }, headerTitle: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.title }, footer: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: 20, backgroundColor: COLORS.white, borderTopWidth: 1, borderColor: COLORS.lightGray }, addToCartButton: { backgroundColor: COLORS.primary, padding: 15, borderRadius: 12, alignItems: 'center' }, addToCartButtonText: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, color: COLORS.white }, disabledButton: { backgroundColor: '#A9B0C3' }
+    safeArea: { flex: 1, backgroundColor: COLORS.background }, 
+    headerNav: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20,paddingTop:40, backgroundColor: COLORS.background }, 
+    headerTitle: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.title }, 
+    footer: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: 20, backgroundColor: COLORS.white, borderTopWidth: 1, borderColor: COLORS.lightGray }, 
+    addToCartButton: { backgroundColor: COLORS.primary, padding: 15, borderRadius: 12, alignItems: 'center' }, 
+    addToCartButtonText: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, color: COLORS.white }, 
+    disabledButton: { backgroundColor: '#A9B0C3' }
 });

@@ -7,7 +7,7 @@ export default function SearchBar({
   autoFocus = false,
   value,
   onChangeText,
-  placeholder = "Cerca"
+  placeholder = "Cerca un distributore"
 }) {
   return (
     <View style={searchBarStyles.container}>

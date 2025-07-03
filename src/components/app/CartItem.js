@@ -13,7 +13,7 @@ export default function CartItem({ item, quantity, onQuantityChange, isEditable 
                 <Text style={cartItemStyles.name}>{item.name}</Text>
                 <Text style={cartItemStyles.price}>€{itemTotalPrice}</Text>
             </View>
-            {isEditable && (
+            {isEditable ? (
                 <View style={cartItemStyles.stepper}>
                     <TouchableOpacity onPress={() => onQuantityChange(quantity - 1)} style={cartItemStyles.button}>
                         <Ionicons name="remove-outline" size={20} color={cartItemColors.primary} />
@@ -23,6 +23,8 @@ export default function CartItem({ item, quantity, onQuantityChange, isEditable 
                         <Ionicons name="add-outline" size={20} color={cartItemColors.primary} />
                     </TouchableOpacity>
                 </View>
+            ) : (
+                <Text style={cartItemStyles.quantityDisplay}>x {quantity}</Text>
             )}
         </View>
     );
@@ -35,5 +37,6 @@ const cartItemStyles = StyleSheet.create({
     price: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 14, color: cartItemColors.text, marginTop: 4 },
     stepper: { flexDirection: 'row', alignItems: 'center', backgroundColor: cartItemColors.lightGray, borderRadius: 20 },
     button: { padding: 8 },
-    quantity: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, color: cartItemColors.primary, marginHorizontal: 12, minWidth: 20, textAlign: 'center' }
+    quantity: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, color: cartItemColors.primary, marginHorizontal: 12, minWidth: 20, textAlign: 'center' },
+    quantityDisplay: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, color: cartItemColors.title, marginLeft: 10 }
 });
