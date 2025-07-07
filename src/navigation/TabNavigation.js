@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
 // Importa tutte le schermate
 import HomeScreen from '../screens/App/HomeScreen';
 import SearchScreen from '../screens/App/SearchScreen';
@@ -17,6 +18,7 @@ import OrderHistoryScreen from '../screens/App/OrderHistoryScreen';
 import PastOrderDetailScreen from '../screens/App/PastOrderDetailScreen';
 import OffersScreen from '../screens/App/OffersScreen';
 import PaymentScreen from '../screens/App/PaymentScreen';
+import RecipeDetailScreen from '../screens/App/RecipeDetailScreen';
 
 const PlaceholderScreen = ({ route }) => ( <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontFamily: 'SpaceGrotesk-Regular' }}>{route.name} Screen</Text></View> );
 const Tab = createBottomTabNavigator();
@@ -35,7 +37,6 @@ function HomeStackNavigator() {
       <HomeStack.Screen name="Search" component={SearchScreen} options={{ title: 'Cerca', headerBackTitleVisible: false, headerTintColor: '#000', headerStyle: { backgroundColor: COLORS.background, elevation: 0, shadowOpacity: 0 }, headerTitleStyle: { fontFamily: 'SpaceGrotesk-Bold' } }} />
       <HomeStack.Screen name="DistributorDetail" component={DistributorDetailScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="SelectQuantity" component={SelectQuantityScreen} options={{ headerShown: false }} />
-      {/* Le schermate di checkout sono state spostate nel CartStackNavigator */}
     </HomeStack.Navigator>
   );
 }
@@ -62,7 +63,15 @@ function ProfileStackNavigator() {
     ); 
 }
 
-function RecipesStackNavigator() { return ( <RecipesStack.Navigator><RecipesStack.Screen name="RecipesMain" component={RecipesScreen} options={{ headerShown: false }} /></RecipesStack.Navigator> ); }
+function RecipesStackNavigator() { 
+    return ( 
+        <RecipesStack.Navigator>
+            <RecipesStack.Screen name="RecipesMain" component={RecipesScreen} options={{ headerShown: false }} />
+            <RecipesStack.Screen name="RecipeDetail" component={RecipeDetailScreen} options={{ headerShown: false }} />
+        </RecipesStack.Navigator> 
+    ); 
+}
+
 function OffersStackNavigator() { return ( <OffersStack.Navigator><OffersStack.Screen name="OffersMain" component={OffersScreen} options={{ headerShown: false }} /></OffersStack.Navigator> ); }
 
 export default function TabNavigator() {

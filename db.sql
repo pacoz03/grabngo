@@ -110,6 +110,7 @@ CREATE TABLE public.recipes (
   is_vegetarian boolean DEFAULT false,
   time_minutes integer,
   difficulty text,
+  steps JSONB,
   CONSTRAINT recipes_pkey PRIMARY KEY (id)
 );
 
