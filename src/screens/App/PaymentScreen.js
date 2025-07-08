@@ -20,7 +20,6 @@ const paymentStyles = StyleSheet.create({
     actionButtonText: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, color: '#FFFFFF' },
 });
 
-// Componente per una singola riga di metodo di pagamento
 const PaymentMethodItem = ({ method, selected, onSelect }) => (
     <TouchableOpacity style={[paymentStyles.methodItem, selected && paymentStyles.selectedMethod]} onPress={onSelect}>
         <Ionicons name={method.icon} size={24} color={selected ? '#007BFF' : '#555'} />
@@ -30,7 +29,7 @@ const PaymentMethodItem = ({ method, selected, onSelect }) => (
 );
 
 export default function PaymentScreen({ route, navigation }) {
-    const { cartItems, distributor, finalTotal } = route.params;
+    const { cartItems, distributor, finalTotal, couponId } = route.params;
     const { session } = useAuth();
     const { clearCart } = useCart();
     const [loading, setLoading] = useState(false);
@@ -58,11 +57,12 @@ export default function PaymentScreen({ route, navigation }) {
             // Chiama la nuova funzione unificata 'place_order'
             const { data: newOrderId, error } = await supabase.rpc('place_order', {
                 distributor_id_param: distributor.id,
-                cart_items: itemsForRPC
+                cart_items: itemsForRPC,
+                coupon_id_param: couponId, // Passa l'ID del coupon (può essere null)
             });
 
             if (error) {
-                // Se la funzione RPC restituisce un errore (es. stock insufficiente), mostralo all'utente.
+                // Se la funzione RPC restituisce un errore, mostralo all'utente.
                 throw new Error(error.message || "Impossibile creare l'ordine.");
             }
 

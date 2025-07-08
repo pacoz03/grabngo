@@ -1,87 +1,82 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { StyleSheet, View, Text, SafeAreaView, ScrollView, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '../../api/supabase';
-// Componenti
-import SearchBar from '../../components/commons/SearchBar';
-import FilterPill from '../../components/app/FilterPill';
-import RecipeCard from '../../components/app/RecipeCard';
-import RecommendedRecipeCard from '../../components/app/RecommendedRecipeCard';
+import { useAuth } from '../../context/AuthContext';
+import ProfileListItem from '../../components/app/ProfileListItem';
 
-export default function RecipesScreen({ navigation }) {
-    const [recipes, setRecipes] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [activeFilter, setActiveFilter] = useState('Tutte');
-    const filters = ['Tutte', 'Vegetariano', 'Veloce (<30m)', 'Facile'];
+const PROFILE_COLORS = { background: '#F4F5F7', white: '#FFFFFF', text: '#555', title: '#000' };
 
-    useEffect(() => {
-        async function fetchRecipes() {
-            try {
-                setLoading(true);
-                const { data, error } = await supabase.from('recipes').select('*');
-                if (error) throw error;
-                if (data) setRecipes(data);
-            } catch (error) {
-                Alert.alert("Errore", "Impossibile caricare le ricette.");
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchRecipes();
-    }, []);
-    
-    const filteredRecipes = useMemo(() => {
-        switch (activeFilter) {
-            case 'Vegetariano': return recipes.filter(r => r.is_vegetarian);
-            case 'Veloce (<30m)': return recipes.filter(r => r.time_minutes < 30);
-            case 'Facile': return recipes.filter(r => r.difficulty === 'Facile');
-            default: return recipes;
-        }
-    }, [activeFilter, recipes]);
+export default function ProfileScreen({ navigation }) {
+     const { session, profile, signOut } = useAuth();
+      console.log("ProfileScreen - Session:", profile);
+
+    const sections = {
+        personal: [
+            { icon: 'leaf-outline', label: 'Tipologia di Dieta', value: profile?.diet_preference || 'Non specificata' },
+        ],
+        account: [
+            { icon: 'time-outline', label: 'Cronologia Ordini', screen: 'OrderHistory' },
+            { icon: 'ribbon-outline', label: 'Punti e Premi di Gamification' },
+            { icon: 'card-outline', label: 'Metodi di Pagamento' },
+        ],
+        support: [ { icon: 'help-circle-outline', label: 'FAQ' } ],
+        auth: [ { icon: 'log-out-outline', label: 'Esci', action: signOut } ]
+    };
+
+    if (!profile) {
+        return <SafeAreaView style={styles.safeArea}><ActivityIndicator style={{flex: 1}} /></SafeAreaView>
+    }
 
     return (
         <SafeAreaView style={styles.safeArea}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.header}><Text style={styles.headerTitle}>Ricette</Text></View>
-                <SearchBar placeholder="Cerca ricette" />
-                <FlatList 
-                    data={filters}
-                    renderItem={({ item }) => <FilterPill label={item} active={item === activeFilter} onPress={() => setActiveFilter(item)} />}
-                    keyExtractor={item => item}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.filterList}
-                />
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Ricette</Text>
-                    {loading ? <ActivityIndicator style={{ height: 150 }} /> : (
-                        <FlatList 
-                            data={filteredRecipes} 
-                            renderItem={({ item }) => (
-                                <RecipeCard 
-                                    recipe={item} 
-                                    onPress={() => navigation.navigate('RecipeDetail', { recipeId: item.id })}
-                                />
-                            )} 
-                            keyExtractor={item => item.id}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={styles.recipeList}
-                        />
-                    )}
+                <View style={styles.header}><Text style={styles.headerTitle}>Account</Text></View>
+                <View style={styles.profileInfoContainer}>
+                    <Image source={{ uri: profile.avatar_url }} style={styles.avatar} />
+                    <Text style={styles.name}>{profile.full_name || 'Utente'}</Text>
                 </View>
-                <View style={styles.section}><Text style={styles.sectionTitle}>Raccomandati per te</Text><View style={styles.recommendedContainer}><RecommendedRecipeCard /></View></View>
+
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Informazioni Personali</Text>
+                    <View style={styles.card}>
+                        <ProfileListItem type="personal" item={{ icon: 'mail-outline', label: 'Email', value: session?.user?.email }} />
+                        <View style={styles.divider} />
+                        <ProfileListItem type="personal" item={sections.personal[0]} />
+                    </View>
+                </View>
+
+                 <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Gestione Account</Text>
+                    <View style={styles.card}>
+                       {sections.account.map((item, index) => (
+                           <React.Fragment key={item.label}>
+                               <ProfileListItem type="navigation" item={item} onPress={() => item.screen && navigation.navigate(item.screen)} />
+                               {index < sections.account.length - 1 && <View style={styles.divider} />}
+                           </React.Fragment>
+                       ))}
+                    </View>
+                </View>
+                
+                 <View style={styles.section}><Text style={styles.sectionTitle}>Supporto</Text><View style={styles.card}><ProfileListItem type="navigation" item={sections.support[0]} /></View></View>
+                 
+                 <View style={styles.section}>
+                    <View style={styles.card}>
+                       <ProfileListItem type="navigation" item={sections.auth[0]} onPress={sections.auth[0].action} />
+                    </View>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
-    safeArea: { flex: 1, backgroundColor: '#F4F5F7' },
-    header: { alignItems: 'center', paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10 },
-    headerTitle: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', color: '#000' },
-    filterList: { paddingHorizontal: 20, paddingVertical: 10 },
-    section: { marginTop: 20 },
-    sectionTitle: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', color: '#000', marginLeft: 20, marginBottom: 15 },
-    recipeList: { paddingLeft: 20 },
-    recommendedContainer: { paddingHorizontal: 20 },
+    safeArea: { flex: 1, backgroundColor: PROFILE_COLORS.background }, container: { flex: 1 },
+    header: { justifyContent: 'center', alignItems: 'center', padding: 20, paddingTop:40 },
+    headerTitle: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', color: PROFILE_COLORS.title },
+    profileInfoContainer: { alignItems: 'center', marginVertical: 10, marginBottom: 30 },
+    avatar: { width: 150, height: 150, borderRadius: 100 },
+    name: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', marginTop: 15, color: PROFILE_COLORS.title },
+    section: { paddingHorizontal: 20, marginBottom: 20 },
+    sectionTitle: { fontSize: 18, fontFamily: 'SpaceGrotesk-Bold', color: PROFILE_COLORS.title, marginBottom: 10 },
+    card: { backgroundColor: PROFILE_COLORS.white, borderRadius: 12, paddingHorizontal: 15 },
+    divider: { height: 1, backgroundColor: '#F0F0F0', marginLeft: 45 }
 });
