@@ -18,12 +18,16 @@ const signUpStyles = StyleSheet.create({
 export default function SignUpScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState(''); // Nuovo stato
     const [loading, setLoading] = useState(false);
 
     async function handleSignUp() {
+        if (password !== confirmPassword) {
+            Alert.alert("Errore", "Le password non coincidono.");
+            return;
+        }
+
         setLoading(true);
-        // La creazione del profilo ora è gestita automaticamente dal Trigger in Supabase.
-        // Dobbiamo solo registrare l'utente.
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
@@ -43,7 +47,20 @@ export default function SignUpScreen({ navigation }) {
                 <Text style={signUpStyles.title}>Crea un Account</Text>
                 <Text style={signUpStyles.subtitle}>Inizia la tua avventura con noi</Text>
                 <AuthInput label="Email" value={email} onChangeText={setEmail} placeholder="tua@email.com" keyboardType="email-address" />
-                <AuthInput label="Password" value={password} onChangeText={setPassword} placeholder="Crea una password sicura" secureTextEntry />
+                <AuthInput 
+                    label="Password" 
+                    value={password} 
+                    onChangeText={setPassword} 
+                    placeholder="Crea una password sicura" 
+                    secureTextEntry
+                />
+                <AuthInput 
+                    label="Conferma Password" 
+                    value={confirmPassword} 
+                    onChangeText={setConfirmPassword} 
+                    placeholder="Ripeti la password" 
+                    secureTextEntry
+                />
                 <AuthButton title="Registrati" onPress={handleSignUp} loading={loading} />
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                     <Text style={signUpStyles.linkText}>Hai già un account? <Text style={signUpStyles.linkBold}>Accedi</Text></Text>

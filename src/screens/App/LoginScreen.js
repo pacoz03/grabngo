@@ -35,8 +35,20 @@ export default function LoginScreen({ navigation }) {
                 <Text style={loginStyles.title}>Bentornato!</Text>
                 <Text style={loginStyles.subtitle}>Accedi per continuare</Text>
 
-                <AuthInput label="Email" value={email} onChangeText={setEmail} placeholder="tua@email.com" keyboardType="email-address" />
-                <AuthInput label="Password" value={password} onChangeText={setPassword} placeholder="La tua password" secureTextEntry />
+                <AuthInput
+                    label="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="tua@email.com"
+                    keyboardType="email-address"
+                />
+                <AuthInput
+                    label="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="La tua password"
+                    secureTextEntry // Questa prop attiva la funzionalità "mostra/nascondi"
+                />
                 
                 <AuthButton title="Accedi" onPress={handleLogin} loading={loading} />
 
