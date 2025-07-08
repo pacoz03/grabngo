@@ -10,6 +10,7 @@ import RecommendedRecipeCard from '../../components/app/RecommendedRecipeCard';
 export default function RecipesScreen({ navigation }) {
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('Tutte');
     const filters = ['Tutte', 'Vegetariano', 'Veloce (<30m)', 'Facile'];
 
@@ -30,45 +31,42 @@ export default function RecipesScreen({ navigation }) {
     }, []);
     
     const filteredRecipes = useMemo(() => {
+        let results = recipes;
+
+        // Applica il filtro per categoria
         switch (activeFilter) {
-            case 'Vegetariano': return recipes.filter(r => r.is_vegetarian);
-            case 'Veloce (<30m)': return recipes.filter(r => r.time_minutes < 30);
-            case 'Facile': return recipes.filter(r => r.difficulty === 'Facile');
-            default: return recipes;
+            case 'Vegetariano':
+                results = results.filter(r => r.is_vegetarian);
+                break;
+            case 'Veloce (<30m)':
+                results = results.filter(r => r.time_minutes < 30);
+                break;
+            case 'Facile':
+                results = results.filter(r => r.difficulty === 'Facile');
+                break;
+            default:
+                break;
         }
-    }, [activeFilter, recipes]);
+
+        // Applica il filtro per la barra di ricerca
+        if (searchQuery.trim()) {
+            results = results.filter(r =>
+                r.title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        }
+
+        return results;
+    }, [activeFilter, recipes, searchQuery]);
 
     return (
         <SafeAreaView style={styles.safeArea}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.header}><Text style={styles.headerTitle}>Ricette</Text></View>
-                <SearchBar placeholder="Cerca ricette" onChangeText={(query) => {
-                    if (query) {
-                        supabase
-                            .from('recipes')
-                            .select('*')
-                            .ilike('title', `%${query}%`)
-                            .then(({ data, error }) => {
-                                if (error) {
-                                    Alert.alert("Errore", "Impossibile cercare le ricette.");
-                                } else {
-                                    setRecipes(data);
-                                }
-                            });
-                    } else {
-                        // Reset to all recipes if query is empty
-                        supabase
-                            .from('recipes')
-                            .select('*')
-                            .then(({ data, error }) => {
-                                if (error) {
-                                    Alert.alert("Errore", "Impossibile caricare le ricette.");
-                                } else {
-                                    setRecipes(data);
-                                }
-                            });
-                    }
-                }}/>
+                <SearchBar
+                    placeholder="Cerca ricette per nome..."
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                />
                 <FlatList 
                     data={filters}
                     renderItem={({ item }) => <FilterPill label={item} active={item === activeFilter} onPress={() => setActiveFilter(item)} />}
@@ -92,6 +90,7 @@ export default function RecipesScreen({ navigation }) {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={styles.recipeList}
+                            ListEmptyComponent={<Text style={styles.noResults}>Nessuna ricetta trovata.</Text>}
                         />
                     )}
                 </View>
@@ -102,11 +101,12 @@ export default function RecipesScreen({ navigation }) {
 }
 const styles = StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: '#F4F5F7' },
-    header: { alignItems: 'center', paddingHorizontal: 20, paddingTop: 40,padding: 20},
+    header: { alignItems: 'center', paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10 },
     headerTitle: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', color: '#000' },
     filterList: { paddingHorizontal: 20, paddingVertical: 10 },
     section: { marginTop: 20 },
     sectionTitle: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', color: '#000', marginLeft: 20, marginBottom: 15 },
     recipeList: { paddingLeft: 20 },
     recommendedContainer: { paddingHorizontal: 20 },
+    noResults: { fontFamily: 'SpaceGrotesk-Regular', paddingHorizontal: 20, color: '#666' }
 });

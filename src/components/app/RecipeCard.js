@@ -13,7 +13,7 @@ export default function RecipeCard({ recipe, onPress }) {
 
 const recipeCardStyles = StyleSheet.create({
     card: { width: 220, marginRight: 15, backgroundColor: '#FFF', borderRadius: 10 },
-    image: { width: '100%', height: 120 },
+    image: { width: '100%', height: 120, borderTopLeftRadius: 10, borderTopRightRadius: 10 },
     title: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 16, marginHorizontal: 10, marginTop: 10, color: '#000' },
     description: { fontFamily: 'SpaceGrotesk-Regular', fontSize: 12, marginHorizontal: 10, marginVertical: 5, color: '#666', paddingBottom: 5 }
 });
