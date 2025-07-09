@@ -101,7 +101,7 @@ export default function RecipesScreen({ navigation }) {
 }
 const styles = StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: '#F4F5F7' },
-    header: { alignItems: 'center', paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10 },
+    header: { alignItems: 'center', paddingHorizontal: 20, paddingTop: 40, paddingBottom: 10 },
     headerTitle: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', color: '#000' },
     filterList: { paddingHorizontal: 20, paddingVertical: 10 },
     section: { marginTop: 20 },
