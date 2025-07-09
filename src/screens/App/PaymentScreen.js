@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../context/AuthContext';
@@ -29,8 +29,9 @@ const PaymentMethodItem = ({ method, selected, onSelect }) => (
 );
 
 export default function PaymentScreen({ route, navigation }) {
-    const { cartItems, distributor, finalTotal, couponId } = route.params;
-    const { session } = useAuth();
+    // <-- MODIFICA 1: Riceviamo preTaxTotal dai parametri
+    const { cartItems, distributor, finalTotal, preTaxTotal, couponId } = route.params;
+    const { session, refreshProfile } = useAuth();
     const { clearCart } = useCart();
     const [loading, setLoading] = useState(false);
     const [selectedMethod, setSelectedMethod] = useState('card');
@@ -41,6 +42,12 @@ export default function PaymentScreen({ route, navigation }) {
         { id: 'applepay', label: 'Apple Pay', icon: 'logo-apple' },
     ];
 
+    // <-- MODIFICA 2: Calcoliamo i punti usando preTaxTotal
+    const puntiGuadagnati = useMemo(() => {
+        const PUNTI_PER_EURO = 10;
+        return Math.floor(preTaxTotal * PUNTI_PER_EURO);
+    }, [preTaxTotal]);
+
     const handlePayment = async () => {
         if (!session?.user) {
             Alert.alert("Errore", "Devi essere loggato per completare un ordine.");
@@ -48,25 +55,34 @@ export default function PaymentScreen({ route, navigation }) {
         }
         setLoading(true);
         try {
-            // Prepara i dati per la funzione RPC.
             const itemsForRPC = cartItems.map(item => ({
                 product_id: item.product.id,
                 quantity: item.quantity,
             }));
 
-            // Chiama la nuova funzione unificata 'place_order'
-            const { data: newOrderId, error } = await supabase.rpc('place_order', {
+            // 1. Chiama la funzione per piazzare l'ordine
+            const { data: newOrderId, error: orderError } = await supabase.rpc('place_order', {
                 distributor_id_param: distributor.id,
                 cart_items: itemsForRPC,
-                coupon_id_param: couponId, // Passa l'ID del coupon (può essere null)
+                coupon_id_param: couponId,
             });
 
-            if (error) {
-                // Se la funzione RPC restituisce un errore, mostralo all'utente.
-                throw new Error(error.message || "Impossibile creare l'ordine.");
+            if (orderError) throw new Error(orderError.message || "Impossibile creare l'ordine.");
+
+            // 2. Assegna i punti all'utente
+            const { error: pointsError } = await supabase.rpc('add_points_to_user', {
+                user_id_param: session.user.id,
+                points_to_add: puntiGuadagnati
+            });
+
+            if (pointsError) {
+                console.error("Errore nell'assegnazione dei punti:", pointsError.message);
             }
 
-            // Se tutto va a buon fine, svuota il carrello e naviga.
+            // 3. Aggiorna i dati del profilo in tutta l'app
+            await refreshProfile();
+
+            // 4. Svuota il carrello e naviga
             clearCart();
             navigation.navigate('OrderConfirmation', { orderId: newOrderId });
 
@@ -87,11 +103,11 @@ export default function PaymentScreen({ route, navigation }) {
             <View style={paymentStyles.content}>
                 <Text style={paymentStyles.sectionTitle}>Seleziona un metodo di pagamento</Text>
                 {paymentMethods.map(method => (
-                    <PaymentMethodItem 
-                        key={method.id} 
-                        method={method} 
+                    <PaymentMethodItem
+                        key={method.id}
+                        method={method}
                         selected={selectedMethod === method.id}
-                        onSelect={() => setSelectedMethod(method.id)} 
+                        onSelect={() => setSelectedMethod(method.id)}
                     />
                 ))}
             </View>

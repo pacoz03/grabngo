@@ -19,7 +19,7 @@ export default function OrderSummaryScreen({ route, navigation }) {
         try {
             const { data, error } = await supabase.rpc('validate_coupon', { coupon_code: couponCode });
             if (error) throw error;
-            
+
             setAppliedCoupon(data);
             if (data.discount_type === 'percentage') {
                 setDiscount(totalPrice * (data.discount_value / 100.0));
@@ -41,7 +41,7 @@ export default function OrderSummaryScreen({ route, navigation }) {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-             <View style={styles.headerNav}>
+            <View style={styles.headerNav}>
                 <TouchableOpacity onPress={() => navigation.goBack()}><Ionicons name="arrow-back" size={24} color={COLORS.title} /></TouchableOpacity>
                 <Text style={styles.headerTitle}>Riepilogo Acquisto</Text>
                 <View style={{ width: 24 }} />
@@ -84,13 +84,24 @@ export default function OrderSummaryScreen({ route, navigation }) {
                 contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 100 }}
             />
             <View style={styles.footer}>
-                <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Payment', { cartItems, distributor, finalTotal, couponId: appliedCoupon?.id })}>
+                {/* <-- MODIFICA APPLICATA QUI --> */}
+                <TouchableOpacity
+                    style={styles.actionButton}
+                    onPress={() => navigation.navigate('Payment', {
+                        cartItems,
+                        distributor,
+                        finalTotal,
+                        preTaxTotal: totalPrice - discount, // Aggiunto per il calcolo corretto dei punti
+                        couponId: appliedCoupon?.id
+                    })}
+                >
                     <Text style={styles.actionButtonText}>Procedi al Pagamento</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
 }
+
 const styles = StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: COLORS.white }, headerNav: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20 }, headerTitle: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 18, color: COLORS.title }, sectionTitle: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 20, color: COLORS.title, marginTop: 10, marginBottom: 15 },
     couponContainer: { flexDirection: 'row', marginTop: 20 },
