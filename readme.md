@@ -29,11 +29,11 @@ Per eseguire il progetto in locale, segui questi passaggi.
 * Un account [Supabase](https://supabase.com)
 
 #### 2. Setup
-# Clona il repository
+##### Clona il repository
 git clone [https://github.com/pacoz03/grabngo.git](https://github.com/pacoz03/grabngo.git)
 cd grabngo
 
-# Installa le dipendenze
+##### Installa le dipendenze
 npm install
 
 #### 3. Configurazione di Supabase
