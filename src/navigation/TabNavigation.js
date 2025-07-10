@@ -34,7 +34,7 @@ const COLORS = { primary: '#007BFF', inactive: '#8e8e93', white: '#FFFFFF', back
 function HomeStackNavigator() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="HomeMain" component={HomeScreen} options={{ headerShown: false }} />
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="Search" component={SearchScreen} options={{ title: 'Cerca', headerBackTitleVisible: false, headerTintColor: '#000', headerStyle: { backgroundColor: COLORS.background, elevation: 0, shadowOpacity: 0 }, headerTitleStyle: { fontFamily: 'SpaceGrotesk-Bold' } }} />
       <HomeStack.Screen name="DistributorDetail" component={DistributorDetailScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="SelectQuantity" component={SelectQuantityScreen} options={{ headerShown: false }} />
