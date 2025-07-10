@@ -99,7 +99,9 @@ export default function DistributorDetailScreen({ route, navigation }) {
                 <View style={detailStyles.headerNav}>
                     <TouchableOpacity onPress={() => navigation.goBack()}><Ionicons name="arrow-back" size={24} color="#000" /></TouchableOpacity>
                     <Text style={detailStyles.headerTitle}>{distributor.name}</Text>
-                    <View style={{ width: 24 }} />
+                    <TouchableOpacity onPress={() => navigation.navigate('DistributorMap', { distributor })}>
+                        <Ionicons name="map-outline" size={24} color="#007BFF" />
+                    </TouchableOpacity>
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <Image source={{ uri: 'https://placehold.co/600x300/c9e2b3/333?text=Delizie' }} style={detailStyles.headerImage} />

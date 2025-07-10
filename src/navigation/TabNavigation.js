@@ -19,6 +19,7 @@ import PastOrderDetailScreen from '../screens/App/PastOrderDetailScreen';
 import OffersScreen from '../screens/App/OffersScreen';
 import PaymentScreen from '../screens/App/PaymentScreen';
 import RecipeDetailScreen from '../screens/App/RecipeDetailScreen';
+import DistributorMapScreen from '../screens/App/DistributorMapScreen'; // <-- NUOVO IMPORT
 
 const PlaceholderScreen = ({ route }) => ( <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontFamily: 'SpaceGrotesk-Regular' }}>{route.name} Screen</Text></View> );
 const Tab = createBottomTabNavigator();
@@ -37,6 +38,7 @@ function HomeStackNavigator() {
       <HomeStack.Screen name="Search" component={SearchScreen} options={{ title: 'Cerca', headerBackTitleVisible: false, headerTintColor: '#000', headerStyle: { backgroundColor: COLORS.background, elevation: 0, shadowOpacity: 0 }, headerTitleStyle: { fontFamily: 'SpaceGrotesk-Bold' } }} />
       <HomeStack.Screen name="DistributorDetail" component={DistributorDetailScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="SelectQuantity" component={SelectQuantityScreen} options={{ headerShown: false }} />
+      <HomeStack.Screen name="DistributorMap" component={DistributorMapScreen} options={{ headerShown: false }} />
     </HomeStack.Navigator>
   );
 }
