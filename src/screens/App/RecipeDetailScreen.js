@@ -38,7 +38,7 @@ export default function RecipeDetailScreen({ route, navigation }) {
 
                 const { data: ingredientsData, error: ingredientsError } = await supabase
                     .from('recipe_products')
-                    .select('quantity_needed, products(*)')
+                    .select('products(*)')
                     .eq('recipe_id', recipeId);
                 if (ingredientsError) throw ingredientsError;
                 setIngredients(ingredientsData);
