@@ -17,12 +17,13 @@ export default function OfferCard({ offer }) {
 
 const styles = StyleSheet.create({
     card: {
-        width: 140,
+        width: 250,
         marginRight: 15,
+        backgroundColor: COLORS.white,
     },
     image: {
         width: '100%',
-        height: 120,
+        height: 200,
         borderRadius: 12,
     },
     textContainer: {
