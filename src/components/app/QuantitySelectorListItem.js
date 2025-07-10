@@ -7,7 +7,7 @@ const COLORS = { text: '#333', title: '#000', primary: '#2E3A59', lightGray: '#F
 export default function QuantitySelectorListItem({ product, quantity, onQuantityChange }) {
     return (
         <View style={selectorStyles.container}>
-            <Image source={{ uri: product.image }} style={selectorStyles.image} />
+            <Image source={{ uri: product.image_url }} style={selectorStyles.image} />
             <View style={selectorStyles.infoContainer}>
                 <Text style={selectorStyles.name}>{product.name}</Text>
                 <Text style={selectorStyles.stock}>{product.stock} disponibili</Text>

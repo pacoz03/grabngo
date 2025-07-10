@@ -6,9 +6,10 @@ import ProfileListItem from '../../components/app/ProfileListItem';
 
 const PROFILE_COLORS = { background: '#F4F5F7', white: '#FFFFFF', text: '#555', title: '#000' };
 
+const DEFAULT_AVATAR_URL = 'https://marketplace.canva.com/gJly0/MAGDkMgJly0/1/tl/canva-user-profile-icon-vector.-avatar-or-person-icon.-profile-picture%2C-portrait-symbol.-MAGDkMgJly0.png';
+
 export default function ProfileScreen({ navigation }) {
-     const { session, profile, signOut } = useAuth();
-      console.log("ProfileScreen - Session:", profile);
+    const { session, profile, signOut } = useAuth();
 
     const sections = {
         personal: [
@@ -32,7 +33,9 @@ export default function ProfileScreen({ navigation }) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.header}><Text style={styles.headerTitle}>Account</Text></View>
                 <View style={styles.profileInfoContainer}>
-                    <Image source={{ uri: profile.avatar_url }} style={styles.avatar} />
+
+                    <Image source={{ uri: profile.avatar_url || DEFAULT_AVATAR_URL }} style={styles.avatar} />
+
                     <Text style={styles.name}>{profile.full_name || 'Utente'}</Text>
                 </View>
 
@@ -45,23 +48,23 @@ export default function ProfileScreen({ navigation }) {
                     </View>
                 </View>
 
-                 <View style={styles.section}>
+                <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Gestione Account</Text>
                     <View style={styles.card}>
-                       {sections.account.map((item, index) => (
-                           <React.Fragment key={item.label}>
-                               <ProfileListItem type="navigation" item={item} onPress={() => item.screen && navigation.navigate(item.screen)} />
-                               {index < sections.account.length - 1 && <View style={styles.divider} />}
-                           </React.Fragment>
-                       ))}
+                        {sections.account.map((item, index) => (
+                            <React.Fragment key={item.label}>
+                                <ProfileListItem type="navigation" item={item} onPress={() => item.screen && navigation.navigate(item.screen)} />
+                                {index < sections.account.length - 1 && <View style={styles.divider} />}
+                            </React.Fragment>
+                        ))}
                     </View>
                 </View>
-                
-                 <View style={styles.section}><Text style={styles.sectionTitle}>Supporto</Text><View style={styles.card}><ProfileListItem type="navigation" item={sections.support[0]} /></View></View>
-                 
-                 <View style={styles.section}>
+
+                <View style={styles.section}><Text style={styles.sectionTitle}>Supporto</Text><View style={styles.card}><ProfileListItem type="navigation" item={sections.support[0]} /></View></View>
+
+                <View style={styles.section}>
                     <View style={styles.card}>
-                       <ProfileListItem type="navigation" item={sections.auth[0]} onPress={sections.auth[0].action} />
+                        <ProfileListItem type="navigation" item={sections.auth[0]} onPress={sections.auth[0].action} />
                     </View>
                 </View>
             </ScrollView>
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
     header: { justifyContent: 'center', alignItems: 'center', padding: 20, paddingTop:40 },
     headerTitle: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', color: PROFILE_COLORS.title },
     profileInfoContainer: { alignItems: 'center', marginVertical: 10, marginBottom: 30 },
-    avatar: { width: 150, height: 150, borderRadius: 100 },
+    avatar: { width: 150, height: 150, borderRadius: 100, backgroundColor: '#E0E0E0' },
     name: { fontSize: 22, fontFamily: 'SpaceGrotesk-Bold', marginTop: 15, color: PROFILE_COLORS.title },
     section: { paddingHorizontal: 20, marginBottom: 20 },
     sectionTitle: { fontSize: 18, fontFamily: 'SpaceGrotesk-Bold', color: PROFILE_COLORS.title, marginBottom: 10 },
