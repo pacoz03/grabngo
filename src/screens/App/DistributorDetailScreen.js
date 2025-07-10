@@ -102,7 +102,7 @@ export default function DistributorDetailScreen({ route, navigation }) {
                     <View style={{ width: 24 }} />
                 </View>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <Image source={{ uri: 'https://placehold.co/600x300/c9e2b3/333?text=Delizie' }} style={detailStyles.headerImage} />
+                    <Image source={{ uri: 'https://www.italianfoodnews.com/images/dieta-mediterranea/prodotti-italiani-della-dieta-mediterranea.jpg' }} style={detailStyles.headerImage} />
                     <View style={detailStyles.contentContainer}><Text style={detailStyles.title}>Delizie Mediterranee</Text><Text style={detailStyles.description}>Una selezione accurata di ingredienti mediterranei freschi e autentici, dagli oli d'oliva ai formaggi artigianali.</Text></View>
                     <View style={detailStyles.contentContainer}>
                         <Text style={detailStyles.sectionTitle}>Prodotti</Text>

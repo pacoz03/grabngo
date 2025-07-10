@@ -57,20 +57,20 @@ export const currentUser = {
 };
 export const mockOffers = {
     general: [
-        { id: 'g1', title: '10% di sconto sul tuo prossimo ordine', code: 'SUMMER10', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA-3SAL-fWjxih0UtW0OovVmUTOmrO0GUhR3wjG_qQoOggGup9lhDxr_wzXTvmNvycfMkOcI4l1ZaHPHL0um6m5MRsHbz0gCMo77Zphn7ERlxi8UmAR6m0fc-T_JIdbhhtZLF6G-epQ_iX40tGAL9V4tDqNCPiU54cnjdBg3PNtIdAfXPeOOC1ua0P_7RDbUgzzrD0_Qx4KQJVFTbXN07rSEwastG6ucad1uLWhWyXaFof-ZhvlOl_Zr-cs1bvyaQjncN4N5Ap9bjbp' },
-        { id: 'g2', title: '-5€ su prodotti da selezionati', code: 'HEALTHY00', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVoVNZPJe3FU1uWFz-qQDcwlB0GBO3BHENj44F7LALmqJlKAXG7Jmlkiz9fUDJgZ_-Z4sTV-A6ZqaifbUMXB0Qn9NK5afjUkG2W190HP4kuCoK-S4z5hfgQKPQ0Ovh95-_g42MGDjQdkYItEadBs49U1JhWtGn9FNBBSrWS0I3Aw6A3Znc5auHFVis63-FIgfmVxpNpt2Dq2d39fqr0A6MFTGPdvJOEqz-mmwywJK1KVQxjyXt1cJ1OF784FrMwBFeP8CVHle64zLA' },
+        { id: 'g1', title: '10% di sconto sul tuo prossimo ordine', code: 'SUMMER10', image: 'https://st4.depositphotos.com/4431055/22943/i/450/depositphotos_229435230-stock-photo-shopping-cart-fresh-products.jpg' },
+        { id: 'g2', title: '-5€ su prodotti da noi selezionati', code: 'HEALTHY00', image: 'https://www.stef.com/italia/sites/stef_it/files/styles/hero_wide/public/2024-04/shutterstock_1400873957.jpg.webp?itok=_JoXeshX' },
     ],
     personalized: {
         id: 'p1',
         expiry: 'Scade tra 7 giorni',
         title: '-20% sui tuoi snacks preferiti',
         description: 'Goditi un -20% di sconto sui tuoi snacks mediterranei preferiti',
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA-3SAL-fWjxih0UtW0OovVmUTOmrO0GUhR3wjG_qQoOggGup9lhDxr_wzXTvmNvycfMkOcI4l1ZaHPHL0um6m5MRsHbz0gCMo77Zphn7ERlxi8UmAR6m0fc-T_JIdbhhtZLF6G-epQ_iX40tGAL9V4tDqNCPiU54cnjdBg3PNtIdAfXPeOOC1ua0P_7RDbUgzzrD0_Qx4KQJVFTbXN07rSEwastG6ucad1uLWhWyXaFof-ZhvlOl_Zr-cs1bvyaQjncN4N5Ap9bjbp'
+        image: 'https://www.nutridoc.it/api/articles/00000000343/Snack%20salutari%20da%20supermercato.jpg'
     },
     gamification: {
         id: 'gm1',
         title: 'Completa le sfide e guadagna punti!',
         description: 'Partecipa alle sfide giornaliere per avere accesso esclusivo a sconti e prezzi da urlo',
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAi-U4xK5j_NKn_DpAx_WRSphjVkE7M2sKXRrBeXdJmL_jzYEgAoyFyIoBORYZ9L4Kk37QXB4j_f0dY1dpRhw4GQAavA44ixN685CWobGHVF9R1ry2FO5EYNTxk3sSVcfnXHu4-0oy_yq1HaxRwcP3VBpqPr_Trsv-ExjkDKt4vQtehbUFrvThrr1WMR8cNoaiL5IF5jafQI66hrgzjg30l2vw5chhoPDp_k6zELntjsAyarbOLBn5BfHDvLQXHUtv1I4HTruHMJNaS'
+        image: 'https://i.ytimg.com/vi/6xCOA7fzAX4/maxresdefault.jpg'
     }
 };

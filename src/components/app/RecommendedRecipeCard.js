@@ -11,7 +11,7 @@ export default function RecommendedRecipeCard() {
                     <Text style={recommendedStyles.buttonText}>Visualizza</Text>
                 </TouchableOpacity>
             </View>
-            <Image source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD5CsvqiBUtfNCGL9mcpbUNRttoMEUj57qfqnP8opz_8dOJ7FLQRjIRjl5esvxPXRhfkWlYzPxE6TRu6IaLDTlYRd-3SeKMvQ6Tf_sU3Sv48BOK_2LAtaXxRRDYufs4HPOgQf91gejBa39Gqrqb9KOuVGIXu9J9mNtkz7IH9_ZHtThezHSw1Xs1C-MucU3_vKaY7ptMVPLYAu44S04EpizslXCxQ32K_lI5FTXdvPmyL5xJHqZkPtlYs-8sjci0ZeqGcB3q_k1Cxtz3' }} style={recommendedStyles.image} />
+            <Image source={{ uri: 'https://www.ricettamediterranea.it/wp-content/uploads/2016/09/PiramideDietaMediterranea.png' }} style={recommendedStyles.image} />
         </TouchableOpacity>
     );
 }
