@@ -26,7 +26,15 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Consenti a $(PRODUCT_NAME) di usare la tua posizione in background e quando è in uso.",
+          "locationAlwaysPermission": "Consenti a $(PRODUCT_NAME) di usare la tua posizione in background.",
+          "locationWhenInUsePermission": "Consenti a $(PRODUCT_NAME) di usare la tua posizione quando è in uso."
+        }
+      ]
     ]
   }
 }
