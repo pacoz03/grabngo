@@ -17,7 +17,7 @@ export default function ProfileScreen({ navigation }) {
         ],
         account: [
             { icon: 'time-outline', label: 'Cronologia Ordini', screen: 'OrderHistory' },
-            { icon: 'ribbon-outline', label: 'Punti e Premi di Gamification' },
+            { icon: 'ribbon-outline', label: 'Punti e Premi di Gamification', screen: 'Gamification' },
             { icon: 'card-outline', label: 'Metodi di Pagamento' },
         ],
         support: [ { icon: 'help-circle-outline', label: 'FAQ' } ],

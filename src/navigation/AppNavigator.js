@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import LoginScreen from '../screens/App/LoginScreen';
 import SignUpScreen from '../screens/App/SignUpScreen';
 
+
 const Stack = createStackNavigator();
 
 // Schermata di caricamento

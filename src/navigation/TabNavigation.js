@@ -20,6 +20,7 @@ import OffersScreen from '../screens/App/OffersScreen';
 import PaymentScreen from '../screens/App/PaymentScreen';
 import RecipeDetailScreen from '../screens/App/RecipeDetailScreen';
 import DistributorMapScreen from '../screens/App/DistributorMapScreen'; // <-- NUOVO IMPORT
+import GamificationScreen from '../screens/App/GamificationScreen';
 
 const PlaceholderScreen = ({ route }) => ( <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontFamily: 'SpaceGrotesk-Regular' }}>{route.name} Screen</Text></View> );
 const Tab = createBottomTabNavigator();
@@ -61,6 +62,7 @@ function ProfileStackNavigator() {
             <ProfileStack.Screen name="OrderHistory" component={OrderHistoryScreen} options={{ headerShown: false }} />
             <ProfileStack.Screen name="PastOrderDetail" component={PastOrderDetailScreen} options={{ headerShown: false }} />
             <ProfileStack.Screen name="OrderConfirmation" component={OrderConfirmationScreen} options={{ headerShown: false }} />
+            <ProfileStack.Screen name="Gamification" component={GamificationScreen} options={{headerShown: false}}/>
         </ProfileStack.Navigator> 
     ); 
 }
