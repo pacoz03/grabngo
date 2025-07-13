@@ -18,7 +18,7 @@ export default function DistributorDetailScreen({ route, navigation }) {
     const { distributor } = route.params;
     const { session } = useAuth(); // Ottieni la sessione utente
     const productFilters = ["Tutti", "Snacks", "Bevande", "Piatti", "Dolci", "Ingredienti"];
-    
+
     const [products, setProducts] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [loadingProducts, setLoadingProducts] = useState(true);
@@ -67,7 +67,7 @@ export default function DistributorDetailScreen({ route, navigation }) {
             Alert.alert("Attenzione", "Devi inserire una valutazione e un commento per inviare la recensione.");
             return;
         }
-        
+
         const { data, error } = await supabase
             .from('reviews')
             .insert([{
@@ -111,7 +111,11 @@ export default function DistributorDetailScreen({ route, navigation }) {
                         <FlatList data={productFilters} renderItem={({ item }) => <FilterPill label={item} active={item === activeFilter} onPress={() => setActiveFilter(item)} />} keyExtractor={item => item} horizontal showsHorizontalScrollIndicator={false} style={{ marginVertical: 10 }} />
                         {loadingProducts ? <ActivityIndicator style={detailStyles.loadingContainer} /> : (
                             <View style={detailStyles.productGrid}>
-                                {filteredProducts.map(item => <ProductGridItem key={item.id} product={item} />)}
+                                {filteredProducts.map(item => (
+                                    <View key={item.id} pointerEvents="none">
+                                        <ProductGridItem product={item} />
+                                    </View>
+                                ))}
                             </View>
                         )}
                     </View>
