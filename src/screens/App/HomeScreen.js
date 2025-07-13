@@ -108,14 +108,36 @@ export default function HomeScreen() {
                 <View style={homeStyles.section}>
                     <Text style={homeStyles.sectionTitle}>Prodotti in Evidenza</Text>
                     {loadingProducts ? <ActivityIndicator style={homeStyles.loadingContainer} /> : (
-                        <FlatList data={products} renderItem={({ item }) => <ProductCard product={item} />} keyExtractor={item => item.id} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingLeft: 20 }} />
+                        <FlatList
+                            data={products}
+                            renderItem={({ item }) => (
+                                <View pointerEvents="none">
+                                    <ProductCard product={item} />
+                                </View>
+                            )}
+                            keyExtractor={item => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{ paddingLeft: 20 }}
+                        />
                     )}
                 </View>
 
-                <View style={homeStyles.section}>
+                <View style={[homeStyles.section, { marginTop: 10 }]}>
                     <Text style={homeStyles.sectionTitle}>Offerte per Te</Text>
                     {loadingOffers ? <ActivityIndicator style={homeStyles.loadingContainer} /> : (
-                        <FlatList data={offers} renderItem={({ item }) => <HomeOfferCard offer={item} />} keyExtractor={item => item.id} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingLeft: 20 }} />
+                        <FlatList
+                            data={offers}
+                            renderItem={({ item }) => (
+                                <View pointerEvents="none">
+                                    <HomeOfferCard offer={item} />
+                                </View>
+                            )}
+                            keyExtractor={item => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{ paddingLeft: 20 }}
+                        />
                     )}
                 </View>
             </ScrollView>

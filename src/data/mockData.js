@@ -64,6 +64,7 @@ export const mockOffers = {
         id: 'p1',
         expiry: 'Scade tra 7 giorni',
         title: '-20% sui tuoi snacks preferiti',
+        code: 'IO2025',
         description: 'Goditi un -20% di sconto sui tuoi snacks mediterranei preferiti',
         image: 'https://www.nutridoc.it/api/articles/00000000343/Snack%20salutari%20da%20supermercato.jpg'
     },
