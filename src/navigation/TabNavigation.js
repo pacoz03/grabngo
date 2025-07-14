@@ -79,30 +79,30 @@ function RecipesStackNavigator() {
 function OffersStackNavigator() { return ( <OffersStack.Navigator><OffersStack.Screen name="OffersMain" component={OffersScreen} options={{ headerShown: false }} /></OffersStack.Navigator> ); }
 
 export default function TabNavigator() {
-  return (
-    <Tab.Navigator screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ focused, size }) => {
-            const iconColor = focused ? COLORS.primary : COLORS.inactive;
-            let iconComponent;
-            if (route.name === 'Home') iconComponent = <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={iconColor} />;
-            else if (route.name === 'Ricette') iconComponent = <MaterialCommunityIcons name="notebook-outline" size={size} color={iconColor} />;
-            else if (route.name === 'Carrello') iconComponent = <Ionicons name={focused ? 'cart' : 'cart-outline'} size={size} color={iconColor} />;
-            else if (route.name === 'Offerte') iconComponent = <MaterialCommunityIcons name="tag-outline" size={size} color={iconColor} />;
-            else if (route.name === 'Profilo') iconComponent = <Ionicons name={focused ? 'person' : 'person-outline'} size={size} color={iconColor} />;
-            return iconComponent;
-        },
-        tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: COLORS.inactive,
-        tabBarStyle: { backgroundColor: COLORS.white, borderTopWidth: 0, elevation: 5, shadowOpacity: 0.1 },
-        tabBarLabelStyle: { fontSize: 12, fontFamily: 'SpaceGrotesk-Regular' },
-      })}
-    >
-      <Tab.Screen name="Home" component={HomeStackNavigator} />
-      <Tab.Screen name="Ricette" component={RecipesStackNavigator} />
-      <Tab.Screen name="Carrello" component={CartStackNavigator} />
-      <Tab.Screen name="Offerte" component={OffersStackNavigator} />
-      <Tab.Screen name="Profilo" component={ProfileStackNavigator} />
-    </Tab.Navigator>
-  );
+    return (
+        <Tab.Navigator screenOptions={({ route }) => ({
+            headerShown: false,
+            tabBarIcon: ({ focused, size }) => {
+                const iconColor = focused ? COLORS.primary : COLORS.inactive;
+                let iconComponent;
+                if (route.name === 'Home') iconComponent = <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={iconColor} />;
+                else if (route.name === 'Ricette') iconComponent = <MaterialCommunityIcons name="notebook-outline" size={size} color={iconColor} />;
+                else if (route.name === 'Carrello') iconComponent = <Ionicons name={focused ? 'cart' : 'cart-outline'} size={size} color={iconColor} />;
+                else if (route.name === 'Offerte') iconComponent = <MaterialCommunityIcons name="tag-outline" size={size} color={iconColor} />;
+                else if (route.name === 'Profilo') iconComponent = <Ionicons name={focused ? 'person' : 'person-outline'} size={size} color={iconColor} />;
+                return iconComponent;
+            },
+            tabBarActiveTintColor: COLORS.primary,
+            tabBarInactiveTintColor: COLORS.inactive,
+            tabBarStyle: { backgroundColor: COLORS.white, borderTopWidth: 0, elevation: 5, shadowOpacity: 0.1 },
+            tabBarLabelStyle: { fontSize: 12, fontFamily: 'SpaceGrotesk-Regular' },
+        })}
+        >
+            <Tab.Screen name="Home" component={HomeStackNavigator} />
+            <Tab.Screen name="Ricette" component={RecipesStackNavigator} />
+            <Tab.Screen name="Carrello" component={CartStackNavigator} />
+            <Tab.Screen name="Offerte" component={OffersStackNavigator} />
+            <Tab.Screen name="Profilo" component={ProfileStackNavigator} />
+        </Tab.Navigator>
+    );
 }

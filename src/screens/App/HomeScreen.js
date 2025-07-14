@@ -86,13 +86,15 @@ export default function HomeScreen() {
 
                 {/* <-- AGGIUNTO: Sezione che mostra i punti dell'utente loggato --> */}
                 {session && profile && (
-                    <View style={homeStyles.pointsSection}>
-                        {authLoading ? (
-                            <ActivityIndicator color="#0000ff" />
-                        ) : (
-                            <PointsBadge label="I tuoi punti" points={profile.points || 0} iconName="diamond" />
-                        )}
-                    </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Profilo', { screen: 'Gamification' })}>
+                        <View style={homeStyles.pointsSection}>
+                            {authLoading ? (
+                                <ActivityIndicator color="#0000ff" />
+                            ) : (
+                                <PointsBadge label="I tuoi punti" points={profile.points || 0} iconName="diamond" />
+                            )}
+                        </View>
+                    </TouchableOpacity>
                 )}
 
                 <View style={homeStyles.mapContainer}>
