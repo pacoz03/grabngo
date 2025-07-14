@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import {StyleSheet, View, Text, SafeAreaView, ScrollView, FlatList, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { mockOffers } from '../../data/mockData';
 import OfferCard from '../../components/app/OfferCard';
 import PersonalizedOfferCard from '../../components/app/PersonalizedOfferCard';
+
 
 const COLORS = { background: '#F4F5F7', white: '#FFFFFF', title: '#000', text: '#333', border: '#DCDCDC' };
 
@@ -49,7 +50,13 @@ export default function OffersScreen({ navigation }) {
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Gamification</Text>
                     <View style={{ paddingHorizontal: 20 }}>
+                        <View>
                             <PersonalizedOfferCard offer={mockOffers.gamification} />
+                            <TouchableOpacity
+                                style={StyleSheet.absoluteFill}
+                                onPress={() => navigation.navigate('Profilo', { screen: 'Gamification' })}
+                            />
+                        </View>
                     </View>
                 </View>
             </ScrollView>
