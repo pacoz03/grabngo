@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
-export default function ProductCard({ product, onPress }) {
+export default function ProductCard({ product, onPress, isSelected }) {
  return (
    <TouchableOpacity style={styles.container} onPress={onPress}>
-     <View style={styles.card}>
+     <View style={[styles.card, isSelected && styles.selectedCard]}>
        <Image 
          source={{ uri: product.image_url }} 
          style={styles.image} 
@@ -30,6 +30,11 @@ const styles = StyleSheet.create({
    elevation: 3,
    overflow: 'hidden',
    marginBottom: 8,
+   borderWidth: 2,
+   borderColor: 'transparent',
+ },
+ selectedCard: {
+    borderColor: '#007BFF',
  },
  image: {
    width: '100%',
