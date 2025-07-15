@@ -16,19 +16,18 @@ const homeStyles = StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: '#F4F5F7' },
     container: { flex: 1 },
     header: { paddingHorizontal: 20, paddingTop: 40, paddingBottom: 10, alignItems: 'center' },
+    sectionTitle: { fontSize: 20, fontFamily: 'SpaceGrotesk-Bold', color: '#000', marginLeft: 20, marginBottom: 15 },
     headerTitle: { fontSize: 24, fontFamily: 'SpaceGrotesk-Bold', textAlign: 'center', color: '#000' },
     pointsSection: { paddingHorizontal: 20, marginTop: 20 },
     mapContainer: { marginHorizontal: 20, marginTop: 20, borderRadius: 15, overflow: 'hidden', height: 250, justifyContent: 'center', alignItems: 'center' },
     map: { ...StyleSheet.absoluteFillObject },
     locateButton: { position: 'absolute', bottom: 15, right: 15, backgroundColor: '#FFF', borderRadius: 30, width: 50, height: 50, justifyContent: 'center', alignItems: 'center', elevation: 5 },
-    section: { marginTop: 30, marginBottom: 20 },
+    section: { marginTop: 20, marginBottom: 20 },
     sectionTitleContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginBottom: 15 },
-    sectionTitle: { fontSize: 20, fontFamily: 'SpaceGrotesk-Bold', color: '#000' },
     resetButton: { backgroundColor: '#E8E8E8', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20 },
     resetButtonText: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 12, color: '#333' },
     loadingContainer: { height: 150, justifyContent: 'center', alignItems: 'center' },
 });
-
 export default function HomeScreen() {
     const navigation = useNavigation();
     const [markers, setMarkers] = useState([]);
@@ -80,6 +79,7 @@ export default function HomeScreen() {
             
             const formattedMarkers = distributorsData.map(d => ({ ...d, coordinate: { latitude: d.latitude, longitude: d.longitude }, title: d.name }));
             setMarkers(formattedMarkers);
+            fitMapToMarkers(formattedMarkers.map(m => m.id));
 
         } catch (error) {
             Alert.alert("Errore Mappa", "Impossibile caricare i distributori.");
@@ -125,6 +125,15 @@ export default function HomeScreen() {
         mapRef.current?.animateToRegion({ latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 });
     };
 
+    const fitMapToMarkers = (markerIds) => {
+        if (markerIds.length > 0 && mapRef.current) {
+            mapRef.current.fitToSuppliedMarkers(markerIds, {
+                edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+                animated: true,
+            });
+        }
+    };
+
     return (
         <SafeAreaView style={homeStyles.safeArea}>
             <ScrollView style={homeStyles.container} showsVerticalScrollIndicator={false}>
@@ -145,7 +154,7 @@ export default function HomeScreen() {
                 {/* ... (Sezione Punti) */}
                 <View style={homeStyles.mapContainer}>
                     {loadingMap ? <ActivityIndicator size="large" color="#0000ff" /> : (
-                        <MapView ref={mapRef} style={homeStyles.map} initialRegion={{ latitude: 41.8719, longitude: 12.5674, latitudeDelta: 10, longitudeDelta: 10 }}>
+                        <MapView ref={mapRef} style={homeStyles.map} initialRegion={{ latitude: 41.8719, longitude: 12.5674, latitudeDelta: 20, longitudeDelta: 20 }}>
                             {markers.map(marker => <Marker key={marker.id} coordinate={marker.coordinate} title={marker.title} description={marker.description} onPress={() => navigation.navigate('DistributorDetail', { distributor: marker })}/>)}
                             {location && <Marker coordinate={location.coords} title="La mia posizione" pinColor="blue" />}
                         </MapView>
@@ -154,20 +163,35 @@ export default function HomeScreen() {
                 </View>
 
                 <View style={homeStyles.section}>
-                    <View style={homeStyles.sectionTitleContainer}>
                         <Text style={homeStyles.sectionTitle}>Prodotti in Evidenza</Text>
                         {selectedProduct && (
                             <TouchableOpacity style={homeStyles.resetButton} onPress={handleResetFilter}>
                                 <Text style={homeStyles.resetButtonText}>Mostra tutti</Text>
                             </TouchableOpacity>
                         )}
-                    </View>
                     {loadingProducts ? <ActivityIndicator style={homeStyles.loadingContainer} /> : (
                         <FlatList data={products} renderItem={({ item }) => <ProductCard product={item} onPress={() => handleProductPress(item)} isSelected={selectedProduct?.id === item.id} />} keyExtractor={item => item.id} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingLeft: 20 }} />
                     )}
                 </View>
                 
                 {/* ... (Sezione Offerte) */}
+                <View style={[homeStyles.section, { marginTop: 10 }]}>
+                    <Text style={homeStyles.sectionTitle}>Offerte per Te</Text>
+                    {loadingOffers ? <ActivityIndicator style={homeStyles.loadingContainer} /> : (
+                        <FlatList
+                            data={offers}
+                            renderItem={({ item }) => (
+                                <View pointerEvents="none">
+                                    <HomeOfferCard offer={item} />
+                                </View>
+                            )}
+                            keyExtractor={item => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{ paddingLeft: 20 }}
+                        />
+                    )}
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
