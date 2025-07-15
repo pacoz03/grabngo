@@ -24,10 +24,19 @@ const homeStyles = StyleSheet.create({
     locateButton: { position: 'absolute', bottom: 15, right: 15, backgroundColor: '#FFF', borderRadius: 30, width: 50, height: 50, justifyContent: 'center', alignItems: 'center', elevation: 5 },
     section: { marginTop: 20, marginBottom: 20 },
     sectionTitleContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginBottom: 15 },
-    resetButton: { backgroundColor: '#E8E8E8', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20 },
+    resetButton: {
+        alignSelf: 'flex-start',
+        marginLeft: 20,
+        marginBottom: 15,
+        backgroundColor: '#E8E8E8',
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 20
+    },
     resetButtonText: { fontFamily: 'SpaceGrotesk-Bold', fontSize: 12, color: '#333' },
     loadingContainer: { height: 150, justifyContent: 'center', alignItems: 'center' },
 });
+
 export default function HomeScreen() {
     const navigation = useNavigation();
     const [markers, setMarkers] = useState([]);
@@ -72,11 +81,11 @@ export default function HomeScreen() {
                     .from('distributors')
                     .select('id, name, description, latitude, longitude')
                     .in('id', distributorIds);
-                
+
                 if (error) throw error;
                 distributorsData = data || [];
             }
-            
+
             const formattedMarkers = distributorsData.map(d => ({ ...d, coordinate: { latitude: d.latitude, longitude: d.longitude }, title: d.name }));
             setMarkers(formattedMarkers);
             fitMapToMarkers(formattedMarkers.map(m => m.id));
@@ -139,7 +148,6 @@ export default function HomeScreen() {
             <ScrollView style={homeStyles.container} showsVerticalScrollIndicator={false}>
                 <View style={homeStyles.header}><Text style={homeStyles.headerTitle}>Grab'n'Go</Text></View>
                 <TouchableOpacity onPress={() => navigation.navigate('Search')}><SearchBar editable={false} /></TouchableOpacity>
-                {/* <-- AGGIUNTO: Sezione che mostra i punti dell'utente loggato --> */}
                 {session && profile && (
                     <TouchableOpacity onPress={() => navigation.navigate('Profilo', { screen: 'Gamification' })}>
                         <View style={homeStyles.pointsSection}>
@@ -151,7 +159,6 @@ export default function HomeScreen() {
                         </View>
                     </TouchableOpacity>
                 )}
-                {/* ... (Sezione Punti) */}
                 <View style={homeStyles.mapContainer}>
                     {loadingMap ? <ActivityIndicator size="large" color="#0000ff" /> : (
                         <MapView ref={mapRef} style={homeStyles.map} initialRegion={{ latitude: 41.8719, longitude: 12.5674, latitudeDelta: 20, longitudeDelta: 20 }}>
@@ -163,18 +170,18 @@ export default function HomeScreen() {
                 </View>
 
                 <View style={homeStyles.section}>
-                        <Text style={homeStyles.sectionTitle}>Prodotti in Evidenza</Text>
-                        {selectedProduct && (
-                            <TouchableOpacity style={homeStyles.resetButton} onPress={handleResetFilter}>
-                                <Text style={homeStyles.resetButtonText}>Mostra tutti</Text>
-                            </TouchableOpacity>
-                        )}
+                    <Text style={homeStyles.sectionTitle}>Prodotti in Evidenza</Text>
+                    {/* Nessuna modifica necessaria qui, lo stile fa tutto il lavoro */}
+                    {selectedProduct && (
+                        <TouchableOpacity style={homeStyles.resetButton} onPress={handleResetFilter}>
+                            <Text style={homeStyles.resetButtonText}>Mostra tutti</Text>
+                        </TouchableOpacity>
+                    )}
                     {loadingProducts ? <ActivityIndicator style={homeStyles.loadingContainer} /> : (
                         <FlatList data={products} renderItem={({ item }) => <ProductCard product={item} onPress={() => handleProductPress(item)} isSelected={selectedProduct?.id === item.id} />} keyExtractor={item => item.id} horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingLeft: 20 }} />
                     )}
                 </View>
-                
-                {/* ... (Sezione Offerte) */}
+
                 <View style={[homeStyles.section, { marginTop: 10 }]}>
                     <Text style={homeStyles.sectionTitle}>Offerte per Te</Text>
                     {loadingOffers ? <ActivityIndicator style={homeStyles.loadingContainer} /> : (
