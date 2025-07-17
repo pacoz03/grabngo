@@ -74,8 +74,8 @@ const GamificationScreen = () => {
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="#000" />
+                <TouchableOpacity onPress={() => navigation.navigate('Profilo', { screen: 'Account' })}>
+                <Ionicons name="arrow-back" size={24} color="#000" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Gamification</Text>
                 <View style={{ width: 24 }} />
