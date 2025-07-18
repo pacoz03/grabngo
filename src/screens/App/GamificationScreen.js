@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../api/supabase';
 
+
 const GamificationScreen = () => {
     const { session, profile, refreshProfile } = useAuth();
     const navigation = useNavigation();
@@ -110,25 +111,45 @@ const GamificationScreen = () => {
                     <Text style={styles.sectionTitle}>Challenges & Mini‑Games</Text>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} bounces={false} alwaysBounceHorizontal={false} contentContainerStyle={{ paddingRight: 20 }}>
-                    {miniGames.map((item, index) => (
-                        <View
-                            key={index}
-                            style={[
-                                styles.miniGameCard,
-                                {
-                                    marginLeft: index === 0 ? 20 : 12,
-                                },
-                            ]}
-                        >
-                            <Image source={{ uri: item.image }} style={styles.miniGameImage}/>
-                            <Text style={styles.miniGameTitle}>{item.title}</Text>
-                            <View style={styles.subtitleContainer}>
-                                <Text style={styles.subtitleLine}>{item.subtitle1}</Text>
-                                <Text style={styles.subtitleLine}>{item.subtitle2}</Text>
+                    {miniGames.map((item, index) => {
+                        const cardContent = (
+                            <View
+                                style={[
+                                    styles.miniGameCard,
+                                    { marginLeft: index === 0 ? 20 : 12 },
+                                ]}
+                            >
+                                <Image source={{ uri: item.image }} style={styles.miniGameImage}/>
+                                <Text style={styles.miniGameTitle}>{item.title}</Text>
+                                <View style={styles.subtitleContainer}>
+                                    <Text style={styles.subtitleLine}>{item.subtitle1}</Text>
+                                    <Text style={styles.subtitleLine}>{item.subtitle2}</Text>
+                                </View>
+                                <Text style={styles.miniGamePoints}>{item.points}</Text>
                             </View>
-                            <Text style={styles.miniGamePoints}>{item.points}</Text>
-                        </View>
-                    ))}
+                        );
+
+                        if (item.title === 'Ruota della Fortuna') {
+                            return (
+                                <TouchableOpacity
+                                    key={index}
+                                    onPress={() => navigation.navigate('RuotaDellaFortuna', {
+                                        profile,
+                                        refreshProfile,
+                                    })}
+                                    activeOpacity={0.85}
+                                >
+                                    {cardContent}
+                                </TouchableOpacity>
+                            );
+                        }
+
+                        return (
+                            <View key={index}>
+                                {cardContent}
+                            </View>
+                        );
+                    })}
                 </ScrollView>
 
                 <View style={styles.section}>

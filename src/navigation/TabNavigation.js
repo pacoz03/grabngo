@@ -21,6 +21,7 @@ import PaymentScreen from '../screens/App/PaymentScreen';
 import RecipeDetailScreen from '../screens/App/RecipeDetailScreen';
 import DistributorMapScreen from '../screens/App/DistributorMapScreen'; // <-- NUOVO IMPORT
 import GamificationScreen from '../screens/App/GamificationScreen';
+import LuckyWheel from '../screens/App/LuckyWheel';
 
 const PlaceholderScreen = ({ route }) => ( <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontFamily: 'SpaceGrotesk-Regular' }}>{route.name} Screen</Text></View> );
 const Tab = createBottomTabNavigator();
@@ -63,7 +64,19 @@ function ProfileStackNavigator() {
             <ProfileStack.Screen name="PastOrderDetail" component={PastOrderDetailScreen} options={{ headerShown: false }} />
             <ProfileStack.Screen name="OrderConfirmation" component={OrderConfirmationScreen} options={{ headerShown: false }} />
             <ProfileStack.Screen name="Gamification" component={GamificationScreen} options={{headerShown: false}}/>
-        </ProfileStack.Navigator> 
+            <ProfileStack.Screen
+                name="RuotaDellaFortuna"
+                options={{ title: 'Ruota della Fortuna' }}
+            >
+                {(props) => (
+                    <LuckyWheel
+                        {...props}
+                        profile={props.route.params.profile}
+                        refreshProfile={props.route.params.refreshProfile}
+                    />
+                )}
+            </ProfileStack.Screen>
+        </ProfileStack.Navigator>
     ); 
 }
 
@@ -102,7 +115,21 @@ export default function TabNavigator() {
             <Tab.Screen name="Ricette" component={RecipesStackNavigator} />
             <Tab.Screen name="Carrello" component={CartStackNavigator} />
             <Tab.Screen name="Offerte" component={OffersStackNavigator} />
-            <Tab.Screen name="Profilo" component={ProfileStackNavigator} />
+            <Tab.Screen
+                name="Profilo"
+                component={ProfileStackNavigator}
+                listeners={({ navigation }) => ({
+                    tabPress: e => {
+                        // Previene la navigazione predefinita
+                        e.preventDefault();
+
+                        // Naviga a 'Profilo' e resetta lo stack interno su 'Account'
+                        navigation.navigate('Profilo', {
+                            screen: 'Account',
+                        });
+                    }
+                })}
+            />
         </Tab.Navigator>
     );
 }
