@@ -1,9 +1,5 @@
 Grab'n'Go - App Mobile
 
-<p align="center">
-  <img src="assets/LOGO.png" alt="Grab'n'Go Logo" width="400"/>
-</p>
-
 **Grab'n'Go** è un'app mobile sviluppata in **React Native** che connette gli utenti a distributori automatici intelligenti. L'app consente di localizzare distributori, consultare i prodotti, acquistare e gestire il proprio account direttamente dallo smartphone.
 
 ## ✨ Funzionalità Principali
