@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "grabngo",
+    "name": "Grab'n'Go",
     "slug": "grabngo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/LOGOdef.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
